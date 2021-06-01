@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
-const Player = ({audioRef, currentSong, setCurrentSong, songInfo, setSongInfo, isPlaying, setIsPlaying, songs, setSongs}) => {
+const Player = ({audioRef, currentSong, setCurrentSong, songInfo, setSongInfo, isPlaying, setIsPlaying, songs, setSongs, playSongHandler}) => {
     const activeLibraryHandler = (nextPrev) => {
         const newSongs = songs.map((song) => {
             if(song.id === nextPrev.id) {
@@ -14,15 +14,8 @@ const Player = ({audioRef, currentSong, setCurrentSong, songInfo, setSongInfo, i
         setSongs(newSongs);
     }
     //Event Handlers
-    const playSongHandler = () => {
-        if(isPlaying) {
-            audioRef.current.pause();
-            setIsPlaying(!isPlaying);
-        } else {
-            audioRef.current.play();
-            setIsPlaying(!isPlaying);
-        }
-    };
+    //bruh
+
     const getTime = (time) => {
         return(
             Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)

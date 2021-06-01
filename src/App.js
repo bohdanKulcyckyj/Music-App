@@ -37,11 +37,21 @@ function App() {
     await setCurrentSong(songs[(currentIndex + 1) % songs.length]);
     if(isPlaying) audioRef.current.play();    
   }
+
+  const playSongHandler = () => {
+    if(isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(!isPlaying);
+    } else {
+        audioRef.current.play();
+        setIsPlaying(!isPlaying);
+    }
+  };
   return (
     <div className={`App ${libraryStatus ? "library-active" : ""}`}>
       <Nav libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus} />
-      <Song currentSong={currentSong} />
-      <Player audioRef={audioRef} setSongInfo={setSongInfo} songInfo={songInfo} isPlaying={isPlaying} setIsPlaying={setIsPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} songs={songs} setSongs={setSongs} />
+      <Song currentSong={currentSong} isPlaying={isPlaying} setIsPlaying={setIsPlaying} playSongHandler={playSongHandler} />
+      <Player playSongHandler={playSongHandler} audioRef={audioRef} setSongInfo={setSongInfo} songInfo={songInfo} isPlaying={isPlaying} setIsPlaying={setIsPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} songs={songs} setSongs={setSongs} />
       <Library songs={songs} setSongs={setSongs} setCurrentSong={setCurrentSong} audioRef={audioRef} isPlaying={isPlaying} libraryStatus={libraryStatus} />
       <audio onTimeUpdate={timeUpdateHandler} onLoadedMetadata={timeUpdateHandler} ref={audioRef} src={currentSong.audio} onEnded={songEndHandler}></audio>
     </div>
